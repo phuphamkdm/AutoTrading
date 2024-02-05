@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Price Tracker</title>
+</head>
+<body>
+    <h1>Bitcoin Price Tracker</h1>
+    <p id="price">Loading...</p>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:3000');
+
+        socket.addEventListener('message', (event) => {
+            const data = JSON.parse(event.data);
+            document.getElementById('price').textContent = `Bitcoin Price: $${data.price}`;
+        });
+
+        window.addEventListener('beforeunload', () => {
+            socket.close();
+        });
+    </script>
+</body>
+</html>
